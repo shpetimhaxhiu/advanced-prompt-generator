@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Advanced Prompt Generator</title>
+  </head>
+  <body class="bg-gray-200">
+    <div class="container mx-auto px-4 py-4">
+      <!-- Header with nav comes here -->
+      <div class="flex flex-row justify-between items-center mb-4 border-b-2 pb-4">
+        <div class="flex flex-row items-center">
+          <!-- Robot Icon -->
+          <svg
+            class="w-12 h-12 text-blue-500 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm1.5 15.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM10 13a3 3 0 100-6 3 3 0 000 6zm-3.5-3a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm7 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
+          <div class="ml-2">
+            <h3 class="text-lg font-bold">Advanced Prompt Generator</h3>
+            <p class="text-sm font-semibold text-gray-600">
+              Developed by
+              <a
+                href="https://twitter.com/CrazieLearner"
+                target="_blank"
+                class="text-blue-500"
+                >Shpetim Haxhiu</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-row items-center space-x-4 border-l-2 pl-4">
+          <label class="block text-gray-700 font-bold mb-2" for="api_key">
+            API Key:
+          </label>
+          <input
+            class="border-2 border-gray-200 p-2 rounded-md"
+            type="password"
+            id="api_key"
+            name="api_key"
+            placeholder="sk-..."
+            value=""
+          />
+          <button
+            id="save-api-key"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onclick="saveApiKey()"
+          >
+            Save
+          </button>
+          
+        </div>
+      </div>
+
+      <div class="flex flex-row space-x-4 mb-4">
+        <div class="w-4/12">
+          <form class="">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              <div class="mb-4">
+                <div class="mb-4">
+                  <label class="block text-gray-700 font-bold mb-2" for="role">
+                    Role:
+                  </label>
+                  <input
+                    class="w-full border-2 border-gray-200 p-2 rounded-md"
+                    type="text"
+                    id="ai_role"
+                    name="ai_role"
+                    placeholder="'Growth Hacker AI', 'Web Developer AI', 'Web Design'"
+                    value="Developer AI"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label class="block text-gray-700 font-bold mb-2" for="model">
+                    Model:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      id="ai_model"
+                      name="ai_model"
+                    >
+                      <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                      <option value="gpt-4.0">GPT-4.0 (If you have access)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="block text-gray-700 font-bold mb-2" for="mode">
+                    Mode:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class=" bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 block appearance-none w-full"
+                      id="ai_mode"
+                      name="ai_mode"
+                    >
+                      <option value="roleplay">Roleplay</option>
+                      <option value="story">Story</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="verbosity"
+                  >
+                    Verbosity:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      id="verbosity"
+                      name="verbosity"
+                    >
+                      <option value="On">On</option>
+                      <option value="Off" selected="selected">Off</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="response_format"
+                  >
+                    Response Format:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      id="response_format"
+                      name="response_format"
+                    >
+                      <option value="mixed">Mixed</option>
+                      <option value="codeOnly" selected="selected">
+                        Code Only
+                      </option>
+                      <option value="md">Markdown</option>
+                      <option value="json">JSON</option>
+                      <option value="html">HTML</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="self_critique_method"
+                  >
+                    Self Critique Method:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      id="self_critique_method"
+                      name="self_critique_method"
+                    >
+                      <option value="none">None</option>
+                      <option
+                        value="Answer the question |> Critique the Answer |> Based on the Critique, reconsider the other answer options and give final answer"
+                      >
+                        Answer the question |> Critique the Answer |> Based on
+                        the Critique, reconsider the other answer options and
+                        give final answer
+                      </option>
+                      <option
+                        value="Answer the question |> Critique the Answer |> Based on the Critique, reconsider the other answer options and give final answer |> Critique the final answer"
+                      >
+                        Answer the question |> Critique the Answer |> Based on
+                        the Critique, reconsider the other answer options and
+                        give final answer |> Critique the final answer
+                      </option>
+                      <option
+                        value="Let’s work this out in a step by step way to be sure we have the right answer."
+                      >
+                        Let’s work this out in a step by step way to be sure we
+                        have the right answer.
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="comments"
+                  >
+                    Comments:
+                  </label>
+                  <div class="relative">
+                    <select
+                      class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                      id="comments"
+                      name="comments"
+                    >
+                      <option value="On">On</option>
+                      <option value="Off" selected="selected">Off</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="creativity"
+                  >
+                    Creativity:
+                    <span id="creativity-value" class="font-normal ml-2"
+                      >1.0</span
+                    >
+                  </label>
+                  <input
+                    class="w-full border-2 border-gray-200 p-2 rounded-md"
+                    type="range"
+                    id="creativity"
+                    name="creativity"
+                    min="0.1"
+                    max="1.0"
+                    step="0.01"
+                    value="1.0"
+                    oninput="document.getElementById('creativity-value').textContent = this.value;"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="prompt"
+                  >
+                    Prompt:
+                  </label>
+                  <textarea
+                    class="w-full border-2 border-gray-200 p-2 rounded-md"
+                    id="prompt"
+                    name="prompt"
+                  ></textarea>
+                </div>
+                <div class="mb-4">
+                  <label
+                    class="block text-gray-700 font-bold mb-2"
+                    for="context"
+                  >
+                    Context:
+                  </label>
+                  <textarea
+                    class="w-full border-2 border-gray-200 p-2 rounded-md"
+                    id="context"
+                    name="context"
+                    placeholder="Leave blank if not needed"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="output-section w-8/12 opacity-25 cursor-not-allowed">
+          <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-xl font-bold mb-4">Output</h2>
+            <pre
+              id="output"
+              class="bg-gray-100 p-4 rounded-md mb-4 whitespace-pre-wrap"
+            ></pre>
+
+            <div class="flex items-center justify-end space-x-4">
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-not-allowed"
+                type="button"
+                onclick="copyToClipboard()"
+              >
+                Copy to Clipboard
+              </button>
+
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-not-allowed"
+                type="button"
+                onclick="clearOutput()"
+              >
+                Clear
+              </button>
+              <button
+                id="try-prompt"
+                class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-not-allowed"
+                type="button"
+              >
+                Try Prompt
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-xl font-bold mb-4">API Response</h2>
+            <pre
+              id="api-response"
+              class="bg-gray-100 p-4 rounded-md mb-4 whitespace-pre-wrap"
+            ></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
